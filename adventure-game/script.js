@@ -117,7 +117,7 @@ const scenarioEndings = [
 	};
 	
 	
-	// Render currentState
+	// renderQuestions displays the contents of the current storyNode.
 	function renderQuestion() {
 		console.log(`currentState is: ${currentState}`)
 		const storyNode = story.find(n => n.id === currentState);	
@@ -183,15 +183,21 @@ const scenarioEndings = [
 				
 				answersDiv.innerHTML = ''
 				
+				//creating buttons
 				const li = document.createElement('li');
 				const btn = document.createElement('button');
+				
+				//creates a restart button to restart the game
 				btn.textContent = "Restart?";
+
 				btn.onclick = () => {
 					currentState = "intro"
 					renderQuestion();
 				};
+
 				li.appendChild(btn);
 				answersDiv.appendChild(li);
+
 			} catch (error) {
 				console.log(error.message);
 				return;
