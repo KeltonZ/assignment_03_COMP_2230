@@ -3,7 +3,7 @@ console.log("Game Initialized, ")
 const scenario = document.getElementById("question")
 const answersDiv = document.getElementById("answers")
 const nextBtn = document.getElementById("next-btn")
-
+const header = document.getElementById("story-title")
 
 let currentState = "intro"
 
@@ -53,7 +53,7 @@ const story = [
 	//Line Three: Decision one
 	{
 		id: "lineThreeFallBack",
-		chapterTitle: "Desperate Measures"
+		chapterTitle: "Desperate Measures",
 		scenario: `We fall back and barely manage to escape.
     	Unfortunately we are scattered and lost some forces, do we initiate 
 			a counter strike to stall and destabilize their advance 
@@ -133,6 +133,10 @@ const scenarioEndings = [
 		
 		// sets the question to the current scenario
 		scenario.textContent = storyNode.scenario;
+
+		// sets the title card to the current scenario quote
+		header.textContent = storyNode.chapterTitle;
+
 		console.log(`Set the scenario text to text of id -${storyNode.id}: 
 			${storyNode.scenario}`
 		)
@@ -171,7 +175,11 @@ const scenarioEndings = [
 					throw new Error(`Argument passed does not match any results ${result}`);
 				}
 				
+				// sets the question to the current scenario
 				scenario.textContent = endings.outcome;
+
+				// sets the title card to the current scenario quote
+				header.textContent = endings.endingTitle;
 				
 				answersDiv.innerHTML = ''
 				
