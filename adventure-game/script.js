@@ -4,6 +4,7 @@ const scenario = document.getElementById("question")
 const answersDiv = document.getElementById("answers")
 const nextBtn = document.getElementById("next-btn")
 
+
 let currentState = "intro"
 
 const story = [
@@ -70,7 +71,7 @@ const scenarioEndings = [
 	// Win Screens
 	{
 		id: "winScreen1",
-		endingTitle: "Victory!"
+		endingTitle: "Victory!",
 		outcome: `You retreat to the city and 
 			by repositioning to regain the advantage you successfully 
 			hold off the attack.`
