@@ -7,15 +7,15 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <div id="game-container">
-            <h1 id = "story-title">The Battle of Crimson Ridge</h1>
-            <div id="question-container">
-                <p id="question">Your adventure begins now...</p>
+        <div id="game-container" role="main" aria-labelledby="game-container">
+            <h1 id = "story-title" aria-labelledby="title-card">The Battle of Crimson Ridge</h1>
+            <div id="question-container" aria-labelledby="question-container">
+                <p id="question" tabindex="0" aria-labelledby="scenario-question">Your adventure begins now...</p>
             </div>
-            <ul id="answers">
+            <ul id="answers" tabindex="0" aria-labelledby="choices">
                 <!-- Answer buttons will be injected here by JavaScript -->
             </ul>
-            <button id="next-btn" onclick="nextQuestion()">Start</button>
+            <button id="next-btn" onclick="nextQuestion()" aria-label="Continue the game">Start</button>
         </div>
         <script src="script.js"></script>
     </body>
