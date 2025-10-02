@@ -60,87 +60,120 @@ const story = [
 	}
 ];
 
-// will be called to display end screens win or lose.
-function endings(result) {
 
-	answersDiv.innerHTML = '';
-  nextBtn.style.display = 'inline-block';
+const scenarioEndings = [
+
 	// Win Screens
-	try {
-		if (result === "winScreen1") {
-			winScreen1.textContent = `Victory - You retreat to the city and 
+	{
+		id: "winScreen1",
+		outcome: `Victory - You retreat to the city and 
 			by repositioning to regain the advantage you successfully 
 			hold off the attack.`
-			
-		} else if (result === "winScreen2") {
-			winScreen2.textContent = `Victory - Though risky you recognize that 
+	},
+
+	{
+		id: "winScreen2",
+		outcome: `Victory - Though risky you recognize that 
 			we need every man we can get, we regroup successfully and hold 
 			off the attackers breaking the siege. Well done!`
-			
-			// Lose Screens
-		} else if (result === "loseScreen1") {
-			loseScreen1.textContent = `Defeat - By splitting your forces neither force is capable 
+	},
+
+	// Lose Screens
+	{
+		id: "loseScreen1",
+		outcome:`Defeat - By splitting your forces neither force is capable 
 			of successfully holding back the enemy. You lose many in a pyric victory.`
-			
-		} else if (result === "loseScreen2") {
-			loseScreen2.textContent = `Defeat -   One of the oldest maneuvers 
+	},
+
+	{
+		id: "loseScreen2",
+		outcome: `Defeat -   One of the oldest maneuvers 
 			in the book, the pincer, due to being surrounded the battle 
 			is too heavily to their advantage and we end up being overrun.`
-			
-		} else if (result === "loseScreen3") {
-			loseScreen3.textContent = `Defeat - We end up not having enough forces 
+	},
+
+	{
+		id: "loseScreen3",
+		outcome: `Defeat - We end up not having enough forces 
 			to effectively stall the advance, we lose too much to 
 			attrition and are overrun.`
 		}
-		
-		else {
-			throw new Error(`Argument passed does not match any results ${result}`);
-		}
-	} catch (error) {
-		console.log(error.textContent)
-	} finally {
-		// call the render function here once written kelton
-	}
-};
-
-// Render currentState
-
-function nextQuestion() {
-	nextBtn.style.display = "none";
-	renderQuestion();
-};
-
-
-function renderQuestion() {
+	]
+	
+	function nextQuestion() {
+		nextBtn.style.display = "none";
+		renderQuestion();
+	};
+	
+	
+	// Render currentState
+	function renderQuestion() {
+		console.log(`currentState is: ${currentState}`)
 		const storyNode = story.find(n => n.id === currentState);	
+		
+		console.log(`storyNode value is: ${storyNode.id}`)
 
 		if (!storyNode) {
 			console.log(`Not a story id, passing to endings: ${currentState}`)
-			endings(currentState)
+			renderEndings(currentState)
 			return;
 		}
-
+		
 		// sets the question to the current scenario
 		scenario.textContent = storyNode.scenario;
+		console.log(`Set the scenario text to text of: 
+			${storyNode.id} - ${storyNode.scenario}`
+		)
 		
 		//clears the choice buttons
 		answersDiv.innerHTML = '';
-
+		
+		// iterator creating elements for each choice
 		storyNode.choices.forEach(choice => {
 			const li = document.createElement('li');
 			const btn = document.createElement('button');
-
+			
 			btn.textContent = choice.text;
+			console.log(`button text updated to: ${btn.textContent2}`)
+			
+			//define button functionality when clicked
 			btn.onclick = () => {
 				currentState = choice.next;
+				console.log(`currentState updated to: ${currentState}`)
 				renderQuestion();
 			};
 
 			li.appendChild(btn);
 			answersDiv.appendChild(li);
 		});
-
-		//nextBtn.style.display = 'none' when css is created I'll need to disable the button
-}
-
-
+	}
+	
+	// will be called to display end screens win or lose.
+	function renderEndings(result) {
+		try {
+			const endings = scenarioEndings.find(n => n.id === result)
+		
+			if (!endings) {
+					throw new Error(`Argument passed does not match any results ${result}`);
+				}
+				
+				scenario.textContent = endings.outcome;
+				
+				answersDiv.innerHTML = ''
+				
+				const li = document.createElement('li');
+				const btn = document.createElement('button');
+				btn.textContent = "Restart?";
+				btn.onclick = () => {
+					currentState = "intro"
+					renderQuestion();
+				};
+				li.appendChild(btn);
+				answersDiv.appendChild(li);
+			} catch (error) {
+				console.log(error.message);
+				return;
+			}; 
+		}
+	
+	
