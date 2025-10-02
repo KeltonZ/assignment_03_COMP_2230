@@ -11,6 +11,7 @@ const story = [
     //Intro Scenario
   {  
     id: "intro",
+		chapterTitle: "The beginning of the End",
     scenario: `You're the general of an army 
     	tasked with setting up the defense of your city during a siege.
     	You receive information from scouts that a force will be flanking your position, 
@@ -24,6 +25,7 @@ const story = [
 	//Line one: Decision one
 	{
 		id: "lineOneFallBack",
+		chapterTitle: "Tactical Retreat", 
 		scenario: `We are currently positioned outside of the city, 
 			do we re-allocate a part of our forces to defend against the flank,
 			but risk compromising our strength as a whole, 
@@ -37,6 +39,7 @@ const story = [
 	//Line Two: Decision one
 	{
 		id: "lineTwoFlanked",
+		chapterTitle: "All is fair in Love and Warfare",
 		scenario: `The scouts were correct, and now our forces are in a 
 			horrible position. They're almost upon us, do we fall back to 
 			the city and risk collateral or reposition to counter the flank?`,
@@ -49,6 +52,7 @@ const story = [
 	//Line Three: Decision one
 	{
 		id: "lineThreeFallBack",
+		chapterTitle: "Desperate Measures"
 		scenario: `We fall back and barely manage to escape.
     	Unfortunately we are scattered and lost some forces, do we initiate 
 			a counter strike to stall and destabilize their advance 
@@ -66,14 +70,16 @@ const scenarioEndings = [
 	// Win Screens
 	{
 		id: "winScreen1",
-		outcome: `Victory - You retreat to the city and 
+		endingTitle: "Victory!"
+		outcome: `You retreat to the city and 
 			by repositioning to regain the advantage you successfully 
 			hold off the attack.`
 	},
 
 	{
 		id: "winScreen2",
-		outcome: `Victory - Though risky you recognize that 
+		endingTitle: "Victory!",
+		outcome: `Though risky you recognize that 
 			we need every man we can get, we regroup successfully and hold 
 			off the attackers breaking the siege. Well done!`
 	},
@@ -81,12 +87,14 @@ const scenarioEndings = [
 	// Lose Screens
 	{
 		id: "loseScreen1",
+		endingTitle: "Victory??",
 		outcome:`Defeat - By splitting your forces neither force is capable 
 			of successfully holding back the enemy. You lose many in a pyric victory.`
 	},
 
 	{
 		id: "loseScreen2",
+		endingTitle: "Defeat...",
 		outcome: `Defeat -   One of the oldest maneuvers 
 			in the book, the pincer, due to being surrounded the battle 
 			is too heavily to their advantage and we end up being overrun.`
@@ -94,12 +102,14 @@ const scenarioEndings = [
 
 	{
 		id: "loseScreen3",
+		endingTitle: "Defeat...",
 		outcome: `Defeat - We end up not having enough forces 
 			to effectively stall the advance, we lose too much to 
 			attrition and are overrun.`
 		}
 	]
 	
+	//when button is pressed it will initiate the story
 	function nextQuestion() {
 		nextBtn.style.display = "none";
 		renderQuestion();
@@ -111,18 +121,19 @@ const scenarioEndings = [
 		console.log(`currentState is: ${currentState}`)
 		const storyNode = story.find(n => n.id === currentState);	
 		
-		console.log(`storyNode value is: ${storyNode.id}`)
-
+		
 		if (!storyNode) {
 			console.log(`Not a story id, passing to endings: ${currentState}`)
 			renderEndings(currentState)
 			return;
 		}
 		
+		console.log(`storyNode value is: ${storyNode.id}`)
+		
 		// sets the question to the current scenario
 		scenario.textContent = storyNode.scenario;
-		console.log(`Set the scenario text to text of: 
-			${storyNode.id} - ${storyNode.scenario}`
+		console.log(`Set the scenario text to text of id -${storyNode.id}: 
+			${storyNode.scenario}`
 		)
 		
 		//clears the choice buttons
@@ -142,13 +153,15 @@ const scenarioEndings = [
 				console.log(`currentState updated to: ${currentState}`)
 				renderQuestion();
 			};
-
+			
 			li.appendChild(btn);
 			answersDiv.appendChild(li);
 		});
 	}
-	
-	// will be called to display end screens win or lose.
+
+	/*  will be called to display end screens win or lose.
+	Add console.log if enough time.
+	*/
 	function renderEndings(result) {
 		try {
 			const endings = scenarioEndings.find(n => n.id === result)
@@ -175,5 +188,3 @@ const scenarioEndings = [
 				return;
 			}; 
 		}
-	
-	
